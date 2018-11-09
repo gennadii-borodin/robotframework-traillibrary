@@ -2,18 +2,16 @@
 
     Args:
             project:            TestRail project
-            test_suite:         TestRail test suite. ''Master'' if ommited
-            test_plan:          TestRail test plan
-            test_run:           The name of TestRail test run that will be created
-            run_description:    TestRail test run dscription
-            configset:          Lisr of dictionaries containing TestRail configurations set.
-                                Example: [{'Browser':'ie', 'OS':'Windows'},
-                                            {'Browser':'FireFox', 'OS':'Ubuntu'}]
-            tr_user:            TestRail user
-            tr_url:             TestRail server URL
-            tr_key:             TestRail API key
-
-
+            suite:              TestRail test suite. ''Master'' if ommited
+            plan:               TestRail test plan
+            run:                The name of TestRail test run that will be created
+            d:                  TestRail test run dscription
+            configs:            List of dictionaries containing TestRail configurations
+                                    Example: -configs [{'Browser':'ie', 'OS':'Windows'},
+                                                       {'Browser':'FireFox', 'OS':'Ubuntu'}]
+            user:               TestRail user
+            url:                TestRail server URL
+            key:                TestRail API key
 """
 
 import argparse, pprint, ast
@@ -26,24 +24,25 @@ def main():
     """
 
     parser = argparse.ArgumentParser(description='Create a Test Run in Test Rails')
-    parser.add_argument('-pr', action='store', dest='project', required=True,
-                        help='TestRail project')
-    parser.add_argument('-su', action='store', dest='test_suite', default='Master',
-                        help='TestRail test suite. ''Master'' if ommited')
-    parser.add_argument('-pl', action='store', dest='test_plan', required=True,
-                        help='TestRail test plan')
-    parser.add_argument('-tr', action='store', dest='test_run', required=True,
-                        help='The name of TestRail test run that will be created')
-    parser.add_argument('-rd', action='store', dest='run_description', default=None,
-                        help='TestRail test run dscription')
-    parser.add_argument('-cset', action='append', dest='configset', required=True,
-                        help='TestRail configurations set.')
-    parser.add_argument('-us', action='store', dest='tr_user', required=True,
+    parser.add_argument('-user', action='store', dest='tr_user', required=True,
                         help='TestRail user')
-    parser.add_argument('-ul', action='store', dest='tr_url', required=True,
+    parser.add_argument('-url', action='store', dest='tr_url', required=True,
                         help='TestRail server URL')
-    parser.add_argument('-ak', action='store', dest='tr_key', required=True,
+    parser.add_argument('-key', action='store', dest='tr_key', required=True,
                         help='TestRail API key')
+    parser.add_argument('-project', action='store', dest='project', required=True,
+                        help='TestRail project')
+    parser.add_argument('-suite', action='store', dest='test_suite', default='Master',
+                        help='TestRail test suite. ''Master'' if ommited')
+    parser.add_argument('-plan', action='store', dest='test_plan', required=True,
+                        help='TestRail test plan')
+    parser.add_argument('-run', action='store', dest='test_run', required=True,
+                        help='The name of TestRail test run that will be created')
+    parser.add_argument('-d', action='store', dest='run_description', default=None,
+                        help='TestRail test run dscription')
+    parser.add_argument('-configs', action='store', dest='configset', required=True,
+                        help='List of dictionaries containing TestRail configurations sets')
+    
     args = parser.parse_args()
     pprint.pprint("")
     pprint.pprint("")
