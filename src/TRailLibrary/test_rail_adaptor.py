@@ -131,11 +131,16 @@ class TestRailAdaptor(object):
         if status == 'PASS':
             status_id = 1
         body['status_id'] = status_id
+        
+        try:
+            result = self.client.send_post(
+                'add_result_for_case/{run_id}/{case_id}'.format(run_id=run.id, case_id=case_id),
+                body
+            )
+        except Exception as e:
+            raise ValueError('Cannot add result for case [{id}]. ' 
+                             'Check if the case exists'.format(id=case_id)) from e
 
-        result = self.client.send_post(
-            'add_result_for_case/{run_id}/{case_id}'.format(run_id=run.id, case_id=case_id),
-            body
-        )
         return result
 
     @_Decor.connect_if_disconnected
