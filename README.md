@@ -7,7 +7,7 @@
 ## Installation
 
 ```python
-python setup.py install
+pip install git+https://github.com/gennadii-borodin/robotframework-traillibrary.git
 ```
 
 ## Documentation
@@ -47,3 +47,15 @@ See library documentation on [GitHub](https://github.com/gennadii-borodin/robotf
        [Tags]    C1    C2    C45233    dummy    owner-johndoe
        Log    Hello, world!
    ```
+
+## Usage with CI systems
+
+Test run should exist before the library can log result to Test Rail.
+`createtestrun.py` script can be used to create a test run from a CI system.
+The script can create test run with multiple configurations at a time.
+
+### Script usage
+
+```
+python createtestrun.py -user user@domain.com -url https://server -key test_rail_api_key_here -project "Project" -plan "Continous Testing" -run "Run Name" -d "Plan description" -configs "[{'Browser':'FireFox', 'OS':'Ubuntu'}, {'Browser':'IE', 'OS':'Windows'}]" -caseids [1, 2, 3, 10, 100]
+```
