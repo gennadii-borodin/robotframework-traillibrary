@@ -138,7 +138,7 @@ class TestRailAdaptor(object):
                 body
             )
         except Exception as e:
-            raise ValueError('Cannot add result for case [{id}]. ' 
+            raise ValueError('Cannot add result for case with id: {id}. ' 
                              'Check if the case exists'.format(id=case_id)) from e
 
         return result
