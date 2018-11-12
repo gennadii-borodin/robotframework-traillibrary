@@ -6,7 +6,7 @@
 
 ## Installation
 
-```python
+```
 pip install git+https://github.com/gennadii-borodin/robotframework-traillibrary.git
 ```
 
