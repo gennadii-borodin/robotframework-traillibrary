@@ -32,21 +32,21 @@ See library documentation on [GitHub](https://github.com/gennadii-borodin/robotf
 
 ### Single tag example
 
-   ```robot
-   *** Test Cases ***
-   Test With Test Rail tag
-       [Tags]    C1    dummy    owner-johndoe
-       Log    Hello, world!
-   ```
+```robotframework
+*** Test Cases ***
+Test With Test Rail tag
+    [Tags]    C1    dummy    owner-johndoe
+    Log    Hello, world!
+```
 
 ### Multiple tags example
 
-```robot
-   *** Test Cases ***
-   Test With Test Rail tag
-       [Tags]    C1    C2    C45233    dummy    owner-johndoe
-       Log    Hello, world!
-   ```
+```robotframework
+*** Test Cases ***
+Test With Test Rail tag
+    [Tags]    C1    C2    C45233    dummy    owner-johndoe
+    Log    Hello, world!
+```
 
 ## Usage with CI systems
 
