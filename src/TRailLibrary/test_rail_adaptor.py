@@ -73,7 +73,7 @@ class TestRailAdaptor(object):
         self.active_run = self._get_run(run_name, config)
 
     def create_run(self, name, description, test_suite, config_sets=None,
-                   include_all=True, case_ids=None):
+                   case_ids=None):
         """
         Creates test run in Test Rail
         """
@@ -102,14 +102,22 @@ class TestRailAdaptor(object):
                 run['include_all'] = False
                 run['case_ids'] = case_ids
             else:
-                run['include_all'] = include_all
+                run['include_all'] = True
 
             run['config_ids'] = config_ids
             runs.append(run)
         run_header['suite_id'] = suite_ids[0]
         run_header['name'] = name
+        run_header['description'] = description
         run_header['config_ids'] = list(set(all_config_ids))
         run_header['runs'] = runs
+
+        if not all_config_ids:
+            if case_ids:
+                run_header['include_all'] = False
+                run_header['case_ids'] = case_ids
+            else:
+                run_header['include_all'] = True  
 
         result = self.client.send_post(
             'add_plan_entry/' + str(self.plan.id),
@@ -181,6 +189,7 @@ class TestRailAdaptor(object):
             s_i = suite(**item)
             suites.append(s_i)
         return suites
+
     @_Decor.connect_if_disconnected
     def _get_configs(self, project_id):
         response = self.client.send_get(
@@ -188,7 +197,7 @@ class TestRailAdaptor(object):
             )
         try:
             config = namedtuple('Config', sorted(response[0]['configs'][0]))
-        except AttributeError:
+        except IndexError:
             return None
         config_group = namedtuple('ConfigGroup', ['id', 'name', 'project_id', 'configs'])
         c_groups = []
@@ -208,7 +217,7 @@ class TestRailAdaptor(object):
             )
         try:
             Run = namedtuple('Run', sorted(response['entries'][0]['runs'][0]))
-        except AttributeError:
+        except IndexError:
             return None
         runs = []
         for enrty in response['entries']:

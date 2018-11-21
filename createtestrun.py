@@ -1,6 +1,9 @@
 """Script to crete test run in Test Rail
 
     Args:
+            user:               TestRail user
+            url:                TestRail server URL
+            key:                TestRail API key
             project:            TestRail project
             suite:              TestRail test suite. ''Master'' if ommited
             plan:               TestRail test plan
@@ -9,10 +12,7 @@
             configs:            List of dictionaries containing TestRail configurations
                                     Example: -configs [{'Browser':'ie', 'OS':'Windows'},
                                                        {'Browser':'FireFox', 'OS':'Ubuntu'}]
-            user:               TestRail user
-            url:                TestRail server URL
-            key:                TestRail API key
-
+            caseids:            Array of case ids to be included to the new test run
 """
 
 import argparse, pprint, ast
@@ -47,8 +47,8 @@ def main():
     parser.add_argument('-configs', action='store', dest='configset', required=False,
                         default='[]', help='Optional list of dictionaries containing '
                         'TestRail configurations sets', metavar='\b')
-    parser.add_argument('-caseids', action='store', dest='caseids', required=False,
-                        default=None, help='Optional list of case IDs to be included'
+    parser.add_argument('-caseids', action='store', dest='case_ids', required=False,
+                        default='[]', help='Optional list of case IDs to be included'
                         'to the test run', metavar='\b')
 
     args = parser.parse_args()
@@ -62,15 +62,11 @@ def main():
     test_rail.select_project(args.project)
     test_rail.select_plan(args.test_plan)
 
-    include_all = True
-
-    if args.caseids:
-        include_all = False
+    cases = ast.literal_eval(args.case_ids)
 
     result = test_rail.create_run(args.test_run, args.run_description,
                                   args.test_suite, ast.literal_eval(args.configset),
-                                  include_all=include_all,
-                                  case_ids=ast.literal_eval(args.caseids))
+                                  case_ids=cases)
 
     pprint.pprint("")
     pprint.pprint("")
