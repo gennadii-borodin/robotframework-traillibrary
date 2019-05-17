@@ -14,12 +14,12 @@ import urllib.request, urllib.error
 import json, base64
 
 class APIClient:
-	def __init__(self, base_url):
+	def __init__(self, base_url, protocol='https'):
 		self.user = ''
 		self.password = ''
 		if not base_url.endswith('/'):
 			base_url += '/'
-		self.__url = base_url + 'index.php?/api/v2/'
+		self.__url = '{}://{}index.php?/api/v2/'.format(protocol,base_url)
 
 	#
 	# Send Get
